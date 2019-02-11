@@ -2,7 +2,7 @@ let inquirer = require("inquirer");
 let sql = require("mysql");
 let Table = require("cli-table3");
 
-var connection = sql.createConnection({
+let connection = sql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
@@ -27,7 +27,7 @@ connection.query("SELECT * FROM products", function(err, data){
         table.push([data[i].item_id, data[i].product_name, data[i].price]);
         names.push(data[i].product_name)
     }
-    start();    
+    start();
 })
 
 function start() {
