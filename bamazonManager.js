@@ -120,5 +120,47 @@ function addInventory() {
 }
 
 function addProduct() {
-    
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is the name of the product you would like to add?"
+        },
+        {
+            type: "input",
+            name: "department",
+            message: "What department does the product belong to?"
+        },
+        {
+            type: "input",
+            name: "price",
+            message: "What is the price of the item?",
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                  return true;
+                }
+                return false;
+              }
+        },
+        {
+            type: "input",
+            name: "stock",
+            message: "How many units of quantity do we have in stock?",
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                  return true;
+                }
+                return false;
+              }
+        }
+    ]).then(function(response){
+        let name = response.name;
+        let department = response.department;
+        let price = response.price;
+        let quantity = response.stock;
+        connection.query("INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES ('" + name + "', '" + department + "', '" + price + "', '" + quantity + "')", function(err, data){
+            if (err) throw err;
+            connection.end()
+        })
+    })
 }
